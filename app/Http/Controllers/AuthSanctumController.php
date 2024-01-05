@@ -29,7 +29,7 @@ class AuthSanctumController extends Controller
 
     public function logout()
     {
-        Auth::user()->token()->revoke();
+        Auth::user()->tokens()->delete();
         return response()->json([
             'message' => 'logout success'
         ]);

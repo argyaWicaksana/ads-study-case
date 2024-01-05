@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Resources\EmployeeCollection;
 use App\Http\Resources\EmployeeLeaveCollection;
+use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Exception;
@@ -69,6 +70,15 @@ class EmployeeApiController extends Controller
         }
     }
 
+    public function show(string $id)
+    {
+        $employee = Employee::find($id);
+        return response()->json([
+            'message' => 'Berhasil Menampilkan Data Pegawai!',
+            'data' => new EmployeeResource($employee),
+        ]);
+    }
+
     public function destroy(string $id)
     {
         try {
@@ -121,5 +131,15 @@ class EmployeeApiController extends Controller
         ], 'duration')->paginate(10);
 
         return new EmployeeLeaveCollection($employees);
+    }
+
+    private function generateIdNumber()
+    {
+        do {
+            $code = random_int(100000, 999999);
+            $id = "IP06$code";
+        } while (Employee::where("id_number", "=", $id)->first());
+
+        return $id;
     }
 }

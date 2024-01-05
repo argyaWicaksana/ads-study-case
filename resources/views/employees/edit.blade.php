@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label for="address">Alamat</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror"
-                                    name="address" value={{ $employee->address }} id="address" />
+                                    name="address" value="{{ $employee->address }}" id="address" />
                                 @error('address')
                                     <div class="invalid-feedback">
                                         {{ $message }}
